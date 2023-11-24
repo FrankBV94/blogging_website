@@ -159,7 +159,7 @@ Clone the project
 Go to frontend directory
 
 ```bash
-  cd blogging_frontend
+  cd blog_frontend
 ```
 
 Install dependencies
@@ -171,7 +171,7 @@ Install dependencies
 Go to backend directory
 
 ```bash
-  cd blogging_backend
+  cd blog_backend
 ```
 
 Install dependencies
