@@ -14,27 +14,7 @@ Maybe you can mention me or this repo in the acknowledgements too
   <p>
     An awesome website to share your ideas! 
   </p>
-  
-  
-<!-- Badges -->
-<p>
-  <a href="https://github.com/FrankBV94/blogging_website/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/FrankBV94/blogging_website/" alt="contributors" />
-  </a>
-  <a href="">
-    <img src="https://img.shields.io/github/last-commit/FrankBV94/blogging_website/" alt="last update" />
-  </a>
-  <a href="https://github.com/FrankBV94/blogging_website/network/members">
-    <img src="https://img.shields.io/github/forks/FrankBV94/blogging_website/" alt="forks" />
-  </a>
-  <a href="https://github.com/FrankBV94/blogging_website/stargazers">
-    <img src="https://img.shields.io/github/stars/FrankBV94/blogging_website/" alt="stars" />
-  </a>
-  <a href="https://github.com/FrankBV94/blogging_website/issues/">
-    <img src="https://img.shields.io/github/issues/FrankBV94/blogging_website/" alt="open issues" />
-  </a>
-</p>
-   
+     
 <h4>
     <a href="https://github.com/FrankBV94/blogging_website/">View Demo</a>
   <span> · </span>
