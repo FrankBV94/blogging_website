@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
 const blogSchema = mongoose.Schema({
-
     blog_id: {
         type: String,
         required: true,

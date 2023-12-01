@@ -3,9 +3,40 @@ import Input from '../components/Input'
 import { Link } from 'react-router-dom'
 import { TbBrandGoogleFilled, TbBrandApple } from 'react-icons/tb'
 import PageTransitionAnimationWrapper from '../common/PageTransitionAnimationWrapper'
+import toast from 'react-hot-toast'
 
 const SignUp = () => {
   const [acceptTerms, setAcceptTerms] = useState(false)
+
+  const handleSignup = (e) => {
+    e.preventDefault()
+
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ // regex for email
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/ // regex for password
+
+    // obtener el formulario
+    const form = new FormData(e.target)
+    const formData = {}
+
+    // obtener los datos del formulario
+    for (const [key, value] of form.entries()) {
+      formData[key] = value
+    }
+
+    const { name, email, password } = formData
+
+    // validacion de los datos
+    if (name.length < 3) {
+      toast.error('El nombre debe tener al menos más de 3 letras.')
+    }
+    if (!email || !emailRegex.test(email)) {
+      toast.error('El correo electrónico es invalido.')
+    }
+    if (!passwordRegex.test(password)) {
+      toast.error('La contraseña debe contener 6 u 8 caracteres, un carácter numérico, una letra minúscula y una mayúscula.')
+    }
+    e.target.reset()
+  }
 
   return (
     <PageTransitionAnimationWrapper keyValue='signup'>
@@ -37,7 +68,7 @@ const SignUp = () => {
               </div>
               <form
                 className="space-y-4 md:space-y-6"
-                action="#">
+                onSubmit={handleSignup}>
                 <Input
                   label='Nombre'
                   name='name'
@@ -80,7 +111,7 @@ const SignUp = () => {
                 </div>
                 <button
                   type="submit"
-                  className={`w-full text-white bg-rose-600 hover:bg-rose-700 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800 cursor-pointer ${acceptTerms ? '' : 'cursor-not-allowed'}`}
+                  className={`w-full text-white bg-rose-600 hover:bg-rose-700 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800 cursor-pointer ${acceptTerms ? '' : 'cursor-not-allowed bg-red-300'}`}
                   disabled={!acceptTerms}>
                   Crear cuenta
                 </button>

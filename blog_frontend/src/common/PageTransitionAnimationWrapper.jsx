@@ -25,11 +25,12 @@ const PageTransitionAnimationWrapper =
   }
 
 PageTransitionAnimationWrapper.propTypes = {
-  children: PropTypes.object.isRequired,
-  keyValue: PropTypes.string.isRequired,
-  initial: PropTypes.object.isRequired,
-  animate: PropTypes.object.isRequired,
-  transition: PropTypes.object.isRequired
+  children: PropTypes.object,
+  keyValue: PropTypes.string,
+  initial: PropTypes.object,
+  animate: PropTypes.object,
+  transition: PropTypes.object,
+  className: PropTypes.string
 }
 
 export default PageTransitionAnimationWrapper

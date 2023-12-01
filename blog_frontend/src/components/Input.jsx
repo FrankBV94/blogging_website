@@ -13,7 +13,7 @@ const Input = ({ label, name, type, id, value, placeholder }) => {
     <div>
       <label
         htmlFor={name}
-        className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-neutral-900 dark:text-white cursor-pointer"
       >
         {label}
       </label>
