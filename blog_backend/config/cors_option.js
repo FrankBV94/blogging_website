@@ -1,4 +1,4 @@
-import { allowedOrigins } from "./allowedOrigins.js"
+import { allowedOrigins } from "./allowed_origins.js"
 
 // If the domain is not in "allowedOrigins" it is not allowed by CORS
 export const corsOptions = {

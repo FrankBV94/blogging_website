@@ -1,5 +1,4 @@
-import db from "../config/db_connection.js";
-import { ObjectId } from "mongodb";
+import { db } from "../config/db_connection.js";
 
 const resolvers = {
   Record: {

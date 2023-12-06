@@ -5,17 +5,17 @@ import fs from "fs"
 import { promises } from "fs"
 import path from "path"
 
-const logEvents = async (message, logName) => {
+export const logEvents = async (message, logName) => {
   const dateTime = `${moment().format("DD-MM-YYYY hh:mm:ss")}`;
   const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
 
   try {
-    if (!fs.existsSync(path.join(__dirname, "..", "logs"))) {
-      await promises.mkdir(path.join(__dirname, "..", "logs"));
+    if (!fs.existsSync(path.join(path.dirname, "..", "logs"))) {
+      await promises.mkdir(path.join(path.dirname, "..", "logs"));
     }
 
     await promises.appendFile(
-      path.join(__dirname, "..", "logs", logName),
+      path.join(path.dirname, "..", "logs", logName),
       logItem
     );
   } catch (err) {
@@ -23,10 +23,9 @@ const logEvents = async (message, logName) => {
   }
 };
 
-const logger = (req, res, next) => {
+export const logger = (req, res, next) => {
   logEvents(`${req.method}\t${req.headers.origin}\t${req.url}`, "reqLog.txt");
   console.log(`${req.method} ${req.path}`);
   next();
 };
 
-module.exports = { logger, logEvents };

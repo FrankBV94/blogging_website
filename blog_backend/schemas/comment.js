@@ -1,43 +1,34 @@
-import mongoose, { Schema } from "mongoose";
+import buildSchema from "graphql"
 
-const commentSchema = mongoose.Schema({
-    
-    blog_id: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'blogs'
+export const typeDef = `
+extend type Query {
+  comment(comment_id: Int!): Comment
+  allComments: [Comment]!
+}
+
+type Comment {
+  comment_id: Int!
+  blog_id: Int!
+  comment_author: Int!
+  comment: String!
+  children: [Int]
+  commented_by: Int!
+  isReply: Boolean
+  parent: Int
+  createdAt: String!
+}
+`
+
+export const resolvers = {
+  Query: {
+    async comment(comment_id) {
+      const comment = `SELECT * FROM comment WHERE comment_id=$1`
+
+      return await db.one(comment, comment_id).then(res => res).catch(error, error)
     },
-    blog_author: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'blogs',
-    },
-    comment: {
-        type: String,
-        required: true
-    },
-    children: {
-        type: [Schema.Types.ObjectId],
-        ref: 'comments'
-    },
-    commented_by: {
-        type: Schema.Types.ObjectId,
-        require: true,
-        ref: 'users'
-    },
-    isReply: {
-        type: Boolean,
-    },
-    parent: {
-        type: Schema.Types.ObjectId,
-        ref: 'comments'
+    async allComments(_, __, context) {
+      return await db.query(`SELECT * FROM comment`).then(res => res).catch(error, error)
     }
+  },
+};
 
-},
-{
-    timestamps: {
-        createdAt: 'commentedAt'
-    }
-})
-
-export default mongoose.model("comments", commentSchema)

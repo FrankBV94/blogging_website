@@ -1,17 +1,64 @@
-type Query {
-  record(id: ID!): Record
-  records: [Record]
+type Blog {
+  blog_id: String!
+  title: String!
+  banner: String
+  des: String
+  content: [String]
+  tags: [String]
+  author: Int!
+  total_likes: Int
+  total_comments: Int
+  total_reads: Int
+  total_parent_comments: Int
+  comments: [Int]
+  draft: Boolean
 }
 
-type Mutation {
-  createRecord(name: String!, position: String, level: String): Record
-  deleteRecord(id: ID!): Boolean
-  updateRecord(id: ID!, name: String, position: String, level: String): Record
+type Comment {
+  comment_id: Int!
+  blog_id: Int!
+  blog_author: Int!
+  comment: String!
+  children: [Int]
+  commented_by: Int!
+  isReply: Boolean
+  parent: Int
+  createdAt: String!
 }
 
-type Record {
-  id: ID
-  name: String
-  position: String
-  level: String
+type Notification {
+  type: NotificationType!
+  blog: Int!
+  notification_for: Int!
+  user: Int!
+  comment: Int
+  reply: Int
+  replied_on_comment: Int
+  seen: Boolean
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  REPLY
+}
+
+type User {
+  user_id: String!
+  fullname: String!
+  email: String!
+  password: String
+  username: String
+  bio: String
+  profile_img: String
+  youtube: String
+  instagram: String
+  facebook: String
+  twitter: String
+  github: String
+  website: String
+  total_posts: Int
+  total_reads: Int
+  google_auth: Boolean
+  joinedAt: String
 }

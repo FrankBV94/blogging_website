@@ -1,49 +1,36 @@
 import express, { json } from "express";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import cors from "cors";
-import gql from "graphql-tag";
-import { ApolloServer } from "@apollo/server";
-import { buildSubgraphSchema } from "@apollo/subgraph";
-import { expressMiddleware } from "@apollo/server/express4";
-import resolvers from "./resolvers/resolver.js";
-import { readFileSync } from "fs";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from 'url';
 import 'dotenv/config.js'
+/** GraphQL */
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import { executableSchema } from "./schemas/schema.js";
 /** Config */
-const corsOptions = require("./config/cors_option.js");
+import { corsOptions } from "./config/cors_option.js"
 /** Custom Middlewares */
-const { logger } = require("./middlewares/log_events.js");
-const credentials = require("./middlewares/credentials.js");
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { logger } from "./middlewares/log_events.js"
+import { credentials } from "./middlewares/credentials.js"
 
 const PORT = process.env.SERVER_PORT || 5050;
 const app = express();
 
 // Middlewares
-app.use(logger);
+/* app.use(credentials);
+app.use(logger); */
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
-const typeDefs = gql(
-  readFileSync(resolve(__dirname, "/shcemas/", "schema.graphql"), {
-    encoding: "utf-8",
-  })
-);
-
-const schema = buildSubgraphSchema({ typeDefs, resolvers });
 const server = new ApolloServer({
-  schema,
+  schema: executableSchema
 });
 // Note you must call `start()` on the `ApolloServer`
 // instance before passing the instance to `expressMiddleware`
 await server.start();
 
-// Routes
-app.use("/record", records);
 // Specify the path to mount the server
 app.use(
   '/graphql',
@@ -54,5 +41,5 @@ app.use(
 
 // Start the Express server
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
+  console.log(`${process.env.SERVER_NAME} en puerto ${process.env.SERVER_PORT}`)
 });

@@ -1,46 +1,38 @@
-import mongoose, { Schema } from "mongoose";
+import buildSchema from "graphql"
 
-const notificationSchema = mongoose.Schema({
-    type: {
-        type: String,
-        enum: ["like", "comment", "reply"],
-        required: true
-    },
-    blog: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'blogs'
-    },
-    notification_for: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'users'
-    },
-    user: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'users'
-    },
-    comment: {
-        type: Schema.Types.ObjectId,
-        ref: 'comments'
-    },
-    reply: {
-        type: Schema.Types.ObjectId,
-        ref: 'comments'
-    }, 
-    replied_on_comment:{
-        type: Schema.Types.ObjectId,
-        ref: 'comments'
-    },
-    seen: {
-        type: Boolean,
-        default: false
-    }
-},
-{
-    timestamps: true
+export const typeDef = `
+extend type Query {
+  notification(notification_id: Int!): Notification
+  allnotifications: [Notification]!
 }
-)
 
-export default mongoose.model("notification", notificationSchema)
+type Notification {
+  type: NotificationType!
+  blog: Int!
+  notification_for: Int!
+  user: Int!
+  notification: Int
+  reply: Int
+  replied_on_notification: Int
+  seen: Boolean
+}
+
+enum NotificationType {
+  LIKE
+  notification
+  REPLY
+}
+`
+
+export const resolvers = {
+  Query: {
+    async notification(notification_id) {
+      const notification = `SELECT * FROM notification WHERE notification_id=$1`
+
+      return await db.one(notification, notification_id).then(res => res).catch(error, error)
+    },
+    async allnotifications(_, __, context) {
+      return await db.query(`SELECT * FROM notification`).then(res => res).catch(error, error)
+    }
+  },
+};
